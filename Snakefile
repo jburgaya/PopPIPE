@@ -19,8 +19,16 @@ else:
 samples = pd.read_table(config["poppunk_rfile"], header=None, index_col=0)
 clusters = pd.read_table(config["poppunk_clusters"], sep=",",).set_index("Taxon")
 
+#included_strain_ids = list((clusters.Cluster.value_counts()[clusters.Cluster.value_counts() >= config["min_cluster_size"]]).index)
+#included_samples = samples.loc[clusters.index[clusters.isin(included_strain_ids)["Cluster"]]]
+
+# Filter the index to include only samples present in both samples and clusters
+common_index = samples.index.intersection(clusters.index)
+
+# Select only those samples from samples DataFrame that are present in the common_index
+included_samples = samples.loc[common_index]
 included_strain_ids = list((clusters.Cluster.value_counts()[clusters.Cluster.value_counts() >= config["min_cluster_size"]]).index)
-included_samples = samples.loc[clusters.index[clusters.isin(included_strain_ids)["Cluster"]]]
+
 
 container: "docker://poppunk/poppipe:latest"
 
