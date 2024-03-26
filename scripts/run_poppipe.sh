@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=population_kp
+#SBATCH --job-name=poppipe_kp
 #SBATCH --output=/vol/projects/jburgaya/pipeline/tenet/out/logs/poppipe_kp.out
 #SBATCH --error=/vol/projects/jburgaya/pipeline/tenet/out/logs/poppipe_kp.err
 #SBATCH --partition=cpu
@@ -17,11 +17,8 @@ unset PYTHONPATH
 export PATH=/vol/cluster-data/jburgaya/miniconda3/bin:$PATH
 source /vol/cluster-data/jburgaya/miniconda3/etc/profile.d/conda.sh
 
-# source the activation script for the appropriate conda env
-# source activate quast2
-
 cd /vol/projects/jburgaya/pipeline/PopPIPE
 
-# Run the provided command.
+# Run the provided command
 conda run -n poppipe "$@"
 
